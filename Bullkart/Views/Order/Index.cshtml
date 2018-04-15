@@ -1,0 +1,46 @@
+﻿@model OrderCategoriesViewModel
+
+
+<body id="home">
+    @Html.Partial("MainNavigationPartial", Model.Categories)
+    <section id="topsection">
+        <div class="wrapper">
+            <div class="row">
+                
+                    @if(null == Model.Order)
+                    {
+                        <a>Your Cart is Empty!</a>
+
+                    }
+                    else if (0 == Model.Order.OrderId){ 
+                        <div class="grid_7">
+                            @foreach (OrderLine orderLine in Model.Order.OrderLines)
+                            {
+                            <div class="rightfloat">
+                                <a>@orderLine.Product.ProductName</a>
+                                <a>@orderLine.Quantity</a>
+                                <a>@orderLine.Amount</a>
+                                <br /><br />
+                            </div>
+                            }
+                        </div>
+                        @Html.Partial("AddressFormPartial", Model.Order)
+                        <div class="rightfloat">
+                            <a asp-action="PlaceOrder" 
+                               asp-controller="Order"
+                               class="buttonlink">Place Order</a>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <a>
+                            Your Order #@Model.Order.OrderId Has Been Received Successfully!
+                        </a>
+                    }
+
+            </div>
+        </div>
+    </section>
+
+</body>

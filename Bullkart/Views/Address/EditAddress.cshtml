@@ -1,0 +1,33 @@
+﻿@model CategoriesAddressesViewModel
+
+<body id="home">
+    @Html.Partial("MainNavigationPartial", Model.Categories)
+    <section id="topsection">
+        <div class="wrapper">
+            <div class="row">
+                @foreach(Address address in Model.Addresses){
+                <form id="@address.AddressId"
+                      asp-controller="Address" asp-action="UpdateAddress" method="post">
+                    <input type="hidden" name="addressid" value="@address.AddressId" />
+                    <input type="text" name="name" value="@address.Name" />
+                    <input type="text" name="address1" value="@address.Address1 " />
+                    <input type="text" name="address2" value="@address.Address2 " />
+                    <input type="text" name="city" value="@address.City" />
+                    <input type="text" name="state" value="@address.State" />
+                    <input type="text" name="email" value="@address.Email" />
+                    
+                    <input type="submit" value="Update Address" />
+                </form>
+                <form id="@address.AddressId"
+                      asp-controller="Address" asp-action="DeleteAddress" method="post">
+                    <input type="hidden" name="addressid" value="@address.AddressId" />
+
+                    <input type="submit" value="Delete Address" />
+                </form>
+                }
+                <br /><br />
+            </div>
+        </div>
+    </section>
+
+</body>

@@ -1,0 +1,63 @@
+﻿@model List<Category>
+<!-- header area -->
+<header class="wrapper clearfix">
+
+    <div id="banner">
+        <div id="logo"><a><img src="~/images/basic-logo.png" alt="Logo" width="350"></a></div>
+    </div>
+
+    <!-- main navigation -->
+    <nav id="topnav" role="navigation">
+        <div class="menu-toggle">Menu</div>
+        <ul class="srt-menu" id="menu-main-navigation">
+            <li class="current">
+                <a asp-action="Index"
+                   asp-controller="Home"
+                   asp-route-category="">
+                    Home
+                </a>
+             </li>
+             <li>
+                 <a asp-action="Index"
+                    asp-controller="Address">
+                     Address Book
+                 </a>
+             </li>
+                @foreach (Category category in Model)
+                {
+                <li>
+                    <a asp-action="ProductList"
+                        asp-controller="Home"
+                        asp-route-category="@category.CategoryName">
+                        @category.CategoryName
+                    </a>
+                    <ul>
+                        @if (null != category.Catalogs)
+                        {
+                            @foreach (Catalog catalog in category.Catalogs)
+                            {
+                            <li>
+                                <a asp-action="ProductList"
+                                   asp-controller="Home"
+                                   asp-route-category="@category.CategoryName"
+                                   asp-route-catalog="@catalog.CatalogName">
+                                    @catalog.CatalogName
+                                </a>
+                                <!--<a href="#">@catalog.CatalogName</a>-->
+                            </li>
+                            }
+                        }
+                    </ul>
+                </li>
+                }
+                <li>
+                    <a asp-action="Index"
+                       asp-controller="Order">
+                        <img id="cartIcon" src="~/images/cart.png" width="42" height="40" alt="Cart" style="margin-bottom:15px">
+                    </a>
+                </li>
+            </ul>
+    </nav><!-- end main navigation -->
+
+</header><!-- end header -->
+<!-- grey area -->

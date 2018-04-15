@@ -1,0 +1,49 @@
+﻿@model List<Category>
+
+<body id="home">
+    @Html.Partial("MainNavigationPartial", Model)
+    <section id="topsection">
+        <div class="wrapper">
+            <div class="row">
+                <div class="grid_7">
+                    @foreach (Category category in Model)
+                    {
+                        var currcatalog = "";
+                        if (null != category.Products)
+                        {
+
+                            @foreach (Product product in category.Products)
+                            {
+                                if (null != product.Catalog && !currcatalog.Equals(product.Catalog.CatalogName))
+                                {
+                                    <br />
+                                    currcatalog = product.Catalog.CatalogName;
+                                    <a>@category.CategoryName > @currcatalog</a>
+                                    <br />
+                                }
+                                <div class="rightfloat">
+                                    <a>
+                                        @product.ProductName,
+                                    </a>
+                                    <a>
+                                        @product.Description
+                                    </a>
+                                    <a>
+                                        @product.Price
+                                    </a>
+                                    <a asp-action="AddToCart"
+                                       asp-controller="Order"
+                                       asp-route-product="@product.ProductName"
+                                       class="buttonlink rightfloat">
+                                        Add To Cart
+                                    </a>
+                                    <br />
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

@@ -1,0 +1,36 @@
+﻿@model CategoriesAddressesViewModel
+
+
+<body id="home">
+    @Html.Partial("MainNavigationPartial", Model.Categories)
+    <section id="topsection">
+        <div class="wrapper">
+            <div class="row">
+                
+                    @if(null == Model.Addresses)
+                    {
+                        <a>There are no addresses in the Address Book</a>
+
+                    }
+                    else {
+                        foreach(Address address in Model.Addresses)
+                        {
+                            <a>@address.Name</a>
+                            <a>@address.City,</a>
+                            <a>@address.State</a>
+                            <a>@address.Email</a>
+                            <a class="buttonlink"
+                               asp-action="EditAddress"
+                               asp-controller="Address"
+                               asp-route-addressid="@address.AddressId">
+                                Edit/Delete
+                            </a>
+                            <br/><br/>
+                        }
+
+                    }
+            </div>
+        </div>
+    </section>
+
+</body>
