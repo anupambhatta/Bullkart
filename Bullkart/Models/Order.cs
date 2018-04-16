@@ -12,5 +12,15 @@ namespace Bullkart.Models
         public DateTime? OrderDate { get; set; }
         public Address Address { get; set; }
         public List<OrderLine> OrderLines { get; set; }
+
+        public decimal OrderTotal()
+        {
+            decimal total = 0.00M;
+            foreach(OrderLine ol in OrderLines)
+            {
+                total += ol.Amount;
+            }
+            return total;
+        }
     }
 }

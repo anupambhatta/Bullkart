@@ -5,27 +5,48 @@
     @Html.Partial("MainNavigationPartial", Model.Categories)
     <section id="topsection">
         <div class="wrapper">
-            <div class="row">
+            
                 
                     @if(null == Model.Order)
                     {
-                        <a>Your Cart is Empty!</a>
-
-                    }
-                    else if (0 == Model.Order.OrderId){ 
-                        <div class="grid_7">
-                            @foreach (OrderLine orderLine in Model.Order.OrderLines)
-                            {
-                            <div class="rightfloat">
-                                <a>@orderLine.Product.ProductName</a>
-                                <a>@orderLine.Quantity</a>
-                                <a>@orderLine.Amount</a>
-                                <br /><br />
-                            </div>
-                            }
+                        <div class="row">
+                            <a>Your Cart is Empty!</a>
                         </div>
+                    }
+                    else if (0 == Model.Order.OrderId)
+                    {
+                        <div class="row">
+                            <a>Your Cart</a>
+                        </div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (OrderLine orderLine in Model.Order.OrderLines)
+                                {
+                                    <tr>
+                                        <td>@orderLine.Product.ProductName</td>
+                                        <td>@orderLine.Product.Description</td>
+                                        <td>@orderLine.Quantity</td>
+                                        <td>@orderLine.Amount</td>
+                                    </tr>
+                                }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Order Total:</td>
+                                        <td>@Model.Order.OrderTotal()</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         @Html.Partial("AddressFormPartial", Model.Order)
-                        <div class="rightfloat">
+                        <div class="row">
                             <a asp-action="PlaceOrder" 
                                asp-controller="Order"
                                class="buttonlink">Place Order</a>
@@ -34,12 +55,13 @@
                     }
                     else
                     {
-                        <a>
-                            Your Order #@Model.Order.OrderId Has Been Received Successfully!
-                        </a>
+                        <div class="row">
+                            <a>
+                                Your Order #@Model.Order.OrderId Has Been Received Successfully!
+                            </a>
+                        </div>
                     }
 
-            </div>
         </div>
     </section>
 

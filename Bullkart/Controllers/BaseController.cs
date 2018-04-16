@@ -60,6 +60,7 @@ namespace Bullkart.Controllers
                 if (product.Equals(ol.Product.ProductName))
                 {
                     ol.Quantity += 1;
+                    ol.Amount += ol.Amount;
                     alreadyExists = true;
                     break;
                 }
