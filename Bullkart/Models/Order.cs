@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bullkart.Controllers;
 
 namespace Bullkart.Models
 {
@@ -21,6 +22,11 @@ namespace Bullkart.Models
                 total += ol.Amount;
             }
             return total;
+        }
+
+        public void ResetOrder()
+        {
+            OrderController.Order = null;
         }
     }
 }

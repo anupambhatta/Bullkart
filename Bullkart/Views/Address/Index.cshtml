@@ -13,21 +13,30 @@
 
                     }
                     else {
-                        foreach(Address address in Model.Addresses)
-                        {
-                            <a>@address.Name</a>
-                            <a>@address.City,</a>
-                            <a>@address.State</a>
-                            <a>@address.Email</a>
-                            <a class="buttonlink"
-                               asp-action="EditAddress"
-                               asp-controller="Address"
-                               asp-route-addressid="@address.AddressId">
-                                Edit/Delete
-                            </a>
-                            <br/><br/>
-                        }
+                        <table width="100%">
+                            <tr>
+                                <th align="left">Name</th>
+                                <th align="right">City</th>
+                                <th align="right">Email</th>
+                            </tr>
 
+                            @foreach(Address address in Model.Addresses)
+                            {
+                            <tr>
+                                <td align="left">@address.Name</td>
+                                <td align="right">@address.City, @address.State</td>
+                                <td align="right">@address.Email</td>
+                                <td nowrap="nowrap"> 
+                                    <a class="buttonlink"
+                                        asp-action="EditAddress"
+                                        asp-controller="Address"
+                                        asp-route-addressid="@address.AddressId">
+                                        Edit/Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                        </table>
                     }
             </div>
         </div>

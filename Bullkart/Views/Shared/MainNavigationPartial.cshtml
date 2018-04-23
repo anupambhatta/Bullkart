@@ -3,7 +3,13 @@
 <header class="wrapper clearfix">
 
     <div id="banner">
-        <div id="logo"><a><img src="~/images/basic-logo.png" alt="Logo" width="350"></a></div>
+        <div id="logo">
+            <a asp-action="Index"
+                asp-controller="Home"
+                asp-route-category="">
+                <img src="~/images/basic-logo.png" alt="Logo" width="350">
+             </a>
+        </div>
     </div>
 
     <!-- main navigation -->
