@@ -52,12 +52,12 @@ namespace Bullkart.Controllers
                     .FirstOrDefault();
         }
 
-        public void BuildOrderLine(string product)
+        public void BuildOrderLine(int productid)
         {
             bool alreadyExists = false;
             foreach (OrderLine ol in Order.OrderLines)
             {
-                if (product.Equals(ol.Product.ProductName))
+                if (productid == ol.Product.ProductId)
                 {
                     ol.Quantity += 1;
                     ol.Amount += ol.Amount;
@@ -68,7 +68,7 @@ namespace Bullkart.Controllers
             if (!alreadyExists)
             {
                 Product Product = repository.Products
-                               .Where(p => p.ProductName == product)
+                               .Where(p => p.ProductId == productid)
                                .FirstOrDefault();
                 OrderLine orderLine = new OrderLine
                 {
@@ -80,11 +80,60 @@ namespace Bullkart.Controllers
             }
         }
 
+        public void RemoveOrderLine(int productid)
+        {
+            if(null != Order.OrderLines)
+            {
+                OrderLine rmol = null;
+                foreach(OrderLine ol in Order.OrderLines)
+                {
+                    if(ol.Product.ProductId == productid)
+                    {
+                        rmol = ol;
+                        break;
+                    }
+                }
+                if(null != rmol)
+                {
+                    Order.OrderLines.Remove(rmol);
+                }
+            }
+
+        }
         public List<Address> GetAddresses(int addressid)
         {
-            return repository.Addresses
-                    .Where(a => addressid == 0 || a.AddressId == addressid)
-                    .OrderByDescending(a => a.Name)
+            if(addressid == -1)
+            {
+                Address address = new Address
+                {
+                    Name = "",
+                    Address1 = "",
+                    Address2 = "",
+                    City = "",
+                    State = "",
+                    Email = ""
+                };
+                List<Address> addresses = new List<Address>
+                {
+                    address
+                };
+                return addresses;
+            }
+            List<Address> addresses1 = repository.Addresses
+                                        .Where(a => addressid == 0 || a.AddressId == addressid)
+                                        .OrderByDescending(a => a.Name)
+                                        .ToList();
+            foreach(Address address in addresses1)
+            {
+                address.Orders = GetOrdersByAddress(address.AddressId);
+            }
+            return addresses1;
+        }
+
+        public List<Order> GetOrdersByAddress(int addressid)
+        {
+            return repository.Orders
+                    .Where(o => o.Address.AddressId == addressid)
                     .ToList();
         }
 

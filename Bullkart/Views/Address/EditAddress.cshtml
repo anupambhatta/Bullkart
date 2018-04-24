@@ -1,4 +1,13 @@
 ﻿@model CategoriesAddressesViewModel
+@{ 
+    var addressid = -1;
+    var name = "";
+    var address1 = "";
+    var address2 = "";
+    var city = "";
+    var state = "";
+    var email = "";
+}
 
 <body id="home">
     @Html.Partial("MainNavigationPartial", Model.Categories)
@@ -6,24 +15,40 @@
         <div class="wrapper">
             <div class="row">
                 @foreach(Address address in Model.Addresses){
+                    addressid = (address.AddressId == 0) ? -1 : address.AddressId;
+                    name = address.Name;
+                    address1 = address.Address1;
+                    address2 = address.Address2;
+                    city = address.City;
+                    state = address.State;
+                    email = address.Email;
                 <form id="@address.AddressId"
                       asp-controller="Address" asp-action="UpdateAddress" method="post">
-                    <input type="hidden" name="addressid" value="@address.AddressId" />
-                    <input type="text" name="name" value="@address.Name" />
-                    <input type="text" name="address1" value="@address.Address1 " />
-                    <input type="text" name="address2" value="@address.Address2 " />
-                    <input type="text" name="city" value="@address.City" />
-                    <input type="text" name="state" value="@address.State" />
-                    <input type="text" name="email" value="@address.Email" />
-                    
-                    <input type="submit" value="Update Address" />
+                    <input type="hidden" name="addressid" value="@addressid" />
+                    <input type="text" placeholder="Name" name="name" value="@name" />
+                    <input type="text" placeholder="Address1" name="address1" value="@address1" />
+                    <input type="text" placeholder="Address2" name="address2" value="@address2" />
+                    <input type="text" placeholder="City" name="city" value="@city" />
+                    <input type="text" placeholder="State" name="state" value="@state" />
+                    <input type="text" placeholder="Email" name="email" value="@email" />
+
+
+                    <input type="submit" value="Add/Update" />
                 </form>
+                @if(addressid != -1 && (address.Orders == null || address.Orders.Count == 0))
+                {
                 <form id="@address.AddressId"
                       asp-controller="Address" asp-action="DeleteAddress" method="post">
                     <input type="hidden" name="addressid" value="@address.AddressId" />
 
                     <input type="submit" value="Delete Address" />
                 </form>
+                }
+                @if(address.Orders != null && address.Orders.Count > 0)
+                {
+                    <br/>
+                    <a>This address cannot be deleted as it is associated with an Order.</a>
+                }
                 }
                 <br /><br />
             </div>

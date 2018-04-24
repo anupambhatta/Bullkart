@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Bullkart.Controllers;
 namespace Bullkart.Models
 {
     public class Address
@@ -14,5 +14,8 @@ namespace Bullkart.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Email { get; set; }
+        public List<Order> Orders { get; set; }
     }
+
+    
 }

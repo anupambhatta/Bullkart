@@ -36,6 +36,12 @@
                                         <td align="left" colspan="3">@orderLine.Product.Description</td>
                                         <td align="right" colspan="3">@orderLine.Quantity</td>
                                         <td align="right" colspan="3">@orderLine.Amount</td>
+                                        <td align="right">
+                                            <a asp-action="RemoveFromCart"
+                                               asp-controller="Order"
+                                               asp-route-productid="@orderLine.Product.ProductId"
+                                               class="buttonlink">Remove</a>
+                                        </td>
                                     </tr>
                                 }
                                 </tbody>
@@ -48,7 +54,7 @@
                             </table>
                             <br/>
                         @Html.Partial("AddressFormPartial", Model.Order)
-                        @if(null != Model.Order.Address) { 
+                        @if(null != Model.Order.Address && null != Model.Order.OrderLines && Model.Order.OrderLines.Count > 0) { 
                         <div class="row">
                             <a asp-action="PlaceOrder" 
                                asp-controller="Order"

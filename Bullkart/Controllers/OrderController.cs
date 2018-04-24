@@ -18,7 +18,7 @@ namespace Bullkart.Controllers
             return View(orderCategoriesViewModel);
         }
 
-        public RedirectToActionResult AddToCart(String product)
+        public RedirectToActionResult AddToCart(int productid)
         {
             //Make the order null if it was already placed
             if(null != Order && 0 != Order.OrderId)
@@ -34,7 +34,7 @@ namespace Bullkart.Controllers
                     OrderLines = new List<OrderLine>()
                 };
             }
-            BuildOrderLine(product); 
+            BuildOrderLine(productid); 
             return RedirectToAction("Index");
         }
         
@@ -70,6 +70,12 @@ namespace Bullkart.Controllers
                 repository.dbContext.SaveChanges();
             }
 
+            return RedirectToAction("Index");
+        }
+
+        public RedirectToActionResult RemoveFromCart(int productid)
+        {
+            RemoveOrderLine(productid);
             return RedirectToAction("Index");
         }
     }

@@ -40,6 +40,10 @@ namespace Bullkart.Controllers
                 ad.City = city;
                 ad.State = state;
                 ad.Email = email;
+                if(ad.AddressId == 0)
+                {
+                    repository.dbContext.Addresses.Add(ad);
+                }
             }
             repository.dbContext.SaveChanges();
             return RedirectToAction("Index");
@@ -54,5 +58,6 @@ namespace Bullkart.Controllers
             repository.dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+
     }
 }
