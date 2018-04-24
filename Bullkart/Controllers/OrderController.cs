@@ -76,6 +76,11 @@ namespace Bullkart.Controllers
         public RedirectToActionResult RemoveFromCart(int productid)
         {
             RemoveOrderLine(productid);
+            //Reset Cart if there exists no order line and address associated with the Order.
+            if(Order.Address == null && (Order.OrderLines == null || Order.OrderLines.Count == 0))
+            {
+                Order.ResetOrder();
+            }
             return RedirectToAction("Index");
         }
     }
